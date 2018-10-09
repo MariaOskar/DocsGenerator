@@ -30,3 +30,11 @@ java -jar target\homework3-1.0-jar-with-dependencies.jar
 
 > **note:** If you use Windows terminal, make sure that you've changed encoding ( default code page - 866 ) in order to see cyrillic symbols right. 
 To change encoding use command: `chcp 1251`
+
+## Results examples:
+
+![PDF Example](https://mariaoskar.github.io/DocsGeneratorResults/PDFTable.jpg)
+<https://mariaoskar.github.io/DocsGeneratorResults/Персональные%20данные_10-10-18_01-04-56.pdf>
+
+![Excel Example](https://mariaoskar.github.io/DocsGeneratorResults/excelTable.jpg)
+<https://mariaoskar.github.io/DocsGeneratorResults/Персональные%20данные_10-10-18_01-04-55.xlsx>
