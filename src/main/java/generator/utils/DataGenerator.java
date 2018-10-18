@@ -7,15 +7,16 @@ import java.util.*;
 
 public class DataGenerator {
 
+    private static final String DS = File.separator;
     private static final String MOSCOW_REGION_CODE = "77";
-    private static final String SURNAMES_LIST_FILENAME = "src\\main\\resources\\data\\Surnames.txt";
-    private static final String MALE_NAMES_LIST_FILENAME = "src\\main\\resources\\data\\NamesMale.txt";
-    private static final String FEMALE_NAMES_LIST_FILENAME = "src\\main\\resources\\data\\NamesFemale.txt";
-    private static final String SECOND_NAMES_ROOT_LIST_FILENAME = "src\\main\\resources\\data\\SecondNamesRoot.txt";
-    private static final String COUNTRIES_LIST_FILENAME = "src\\main\\resources\\data\\Countries.txt";
-    private static final String REGIONS_LIST_FILENAME = "src\\main\\resources\\data\\Regions.txt";
-    private static final String CITIES_LIST_FILENAME = "src\\main\\resources\\data\\Cities.txt";
-    private static final String STREETS_LIST_FILENAME = "src\\main\\resources\\data\\Streets.txt";
+    private static final String SURNAMES_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"Surnames.txt";
+    private static final String MALE_NAMES_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"NamesMale.txt";
+    private static final String FEMALE_NAMES_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"NamesFemale.txt";
+    private static final String SECOND_NAMES_ROOT_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"SecondNamesRoot.txt";
+    private static final String COUNTRIES_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"Countries.txt";
+    private static final String REGIONS_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"Regions.txt";
+    private static final String CITIES_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"Cities.txt";
+    private static final String STREETS_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"Streets.txt";
 
     private static Integer[] addLastNumsInINN(String numbers) {
         Integer[] nums = new Integer[12];
@@ -136,8 +137,7 @@ public class DataGenerator {
         return person;
     }
 
-    public static List<Person> generateSomePeople(){
-        int quantity = GeneratorHelper.randomNum(1,30);
+    public static List<Person> generateSomePeople(int quantity){
         List<Person> personList = new ArrayList<>();
         for (int i = 0; i<quantity; i++){
             personList.add(generatePersonalData());
