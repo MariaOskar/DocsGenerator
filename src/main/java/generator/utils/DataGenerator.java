@@ -1,22 +1,31 @@
 package generator.utils;
 
 import generator.models.Person;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DataGenerator {
 
-    private static final String DS = File.separator;
     private static final String MOSCOW_REGION_CODE = "77";
-    private static final String SURNAMES_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"Surnames.txt";
-    private static final String MALE_NAMES_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"NamesMale.txt";
-    private static final String FEMALE_NAMES_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"NamesFemale.txt";
-    private static final String SECOND_NAMES_ROOT_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"SecondNamesRoot.txt";
-    private static final String COUNTRIES_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"Countries.txt";
-    private static final String REGIONS_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"Regions.txt";
-    private static final String CITIES_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"Cities.txt";
-    private static final String STREETS_LIST_FILENAME = "src"+DS+"main"+DS+"resources"+DS+"data"+DS+"Streets.txt";
+    private Source dataSource;
+
+    public DataGenerator() {
+    }
+
+    public DataGenerator(Source dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public Source getDataSource() {
+        return dataSource;
+    }
+
+    public DataGenerator setDataSource(Source dataSource) {
+        this.dataSource = dataSource;
+        return this;
+    }
 
     private static Integer[] addLastNumsInINN(String numbers) {
         Integer[] nums = new Integer[12];
@@ -65,38 +74,6 @@ public class DataGenerator {
         else return "М";
     }
 
-    public static String generateFemaleName(){
-        return GeneratorHelper.chooseRandomString(FEMALE_NAMES_LIST_FILENAME);
-    }
-
-    public static String generateMaleName(){
-        return GeneratorHelper.chooseRandomString(MALE_NAMES_LIST_FILENAME);
-    }
-
-    public static String generateSurname(){
-        return GeneratorHelper.chooseRandomString(SURNAMES_LIST_FILENAME);
-    }
-
-    public static String generateSecondName(){
-        return GeneratorHelper.chooseRandomString(SECOND_NAMES_ROOT_LIST_FILENAME);
-    }
-
-    public static String generateCountry(){
-        return GeneratorHelper.chooseRandomString(COUNTRIES_LIST_FILENAME);
-    }
-
-    public static String generateCity(){
-        return GeneratorHelper.chooseRandomString(CITIES_LIST_FILENAME);
-    }
-
-    public static String generateRegion(){
-        return GeneratorHelper.chooseRandomString(REGIONS_LIST_FILENAME);
-    }
-
-    public static String generateStreet(){
-        return GeneratorHelper.chooseRandomString(STREETS_LIST_FILENAME);
-    }
-
     public static int generateHouse(){
         return GeneratorHelper.randomNum(1,99);
     }
@@ -110,34 +87,34 @@ public class DataGenerator {
     }
 
 
-    public static Person generatePersonalData(){
+    public Person generatePersonalData(){
         Person person = new Person();
         person.setGender(generateGender());
-        person.setSurname(generateSurname());
+        person.setSurname(dataSource.getRandomSurname());
         if(person.getGender().equals("Ж")){
             person.setSurname( person.getSurname() + "а" ) ;
-            person.setName(generateFemaleName());
-            person.setSecondname(generateSecondName()+"на");
+            person.setName(dataSource.getRandomFemaleName());
+            person.setSecondname(dataSource.getRandomSecondName()+"на");
         } else
         {
-            person.setName(generateMaleName());
-            person.setSecondname(generateSecondName()+"ич");
+            person.setName(dataSource.getRandomMaleName());
+            person.setSecondname(dataSource.getRandomSecondName()+"ич");
         }
         person.setBirthday(generateBirthday());
         person.setAge(GeneratorHelper.calculateAge(person.getBirthday()));
         person.setInn(generateINN());
         person.setPostalCode(generatePostCode());
-        person.setCountry(generateCountry());
-        person.setRegion(generateRegion());
-        person.setCity(generateCity());
-        person.setStreet(generateStreet());
+        person.setCountry(dataSource.getRandomCountry());
+        person.setRegion(dataSource.getRandomRegion());
+        person.setCity(dataSource.getRandomCity());
+        person.setStreet(dataSource.getRandomStreet());
         person.setHouse(generateHouse());
         person.setAppartment(generateAppartment());
 
         return person;
     }
 
-    public static List<Person> generateSomePeople(int quantity){
+    public List<Person> generateSomePeople(int quantity){
         List<Person> personList = new ArrayList<>();
         for (int i = 0; i<quantity; i++){
             personList.add(generatePersonalData());
@@ -147,7 +124,7 @@ public class DataGenerator {
 
     public static String filenameGenerator(Class objClass, String format){
         Date now = new Date();
-        String folder = GeneratorHelper.getProperty("application.properties", "output.dir");
+        String folder = PropertyHelper.getProperty("application.properties", "output.dir");
         String name = ((Title)objClass.getAnnotation(Title.class)).value();
         SimpleDateFormat dateFormat = new SimpleDateFormat("d-MM-yy_HH-mm-ss");
         return folder + File.separator + name + "_" + dateFormat.format(now) + "." + format;
