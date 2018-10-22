@@ -24,7 +24,9 @@ db.name = yourDBname
 db.user = yourUsername
 db.password = yourPassword
 ```
-###DB structure:
+
+### DB structure:
+
 ![DB structure](https://mariaoskar.github.io/DocsGeneratorResults/db_structure.jpg)
  
  Directory `src\main\resources\sql` includes 3 database dumps:
